@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vinnovate/app/presentation/login/widgets/custom_form_field.dart';
@@ -73,7 +74,18 @@ class LoginView extends StatelessWidget {
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(5.r)))),
-                          onPressed: () {},
+                          onPressed: () async {
+                            try {
+                              final UserCredential user = await FirebaseAuth
+                                  .instance
+                                  .signInWithEmailAndPassword(
+                                      email: "kallenvasupillai@gmail.com",
+                                      password: "Ishq@9747");
+                              log(user.toString());
+                            } on FirebaseAuthException catch (e) {
+                              log(e.toString());
+                            }
+                          },
                           child: Text(
                             "Log in",
                             style:
