@@ -30,6 +30,11 @@ class ProductModel {
       count: json['rating']?['count']?.toInt() ?? 0,
     );
   }
+
+  @override
+  String toString() {
+    return 'ProductModel(id: $id, title: $title, price: $price, description: $description, image: $image, category: $category, rating: $rating, count: $count)';
+  }
 }
 
 final List<Map<String, dynamic>> productsJson = [
