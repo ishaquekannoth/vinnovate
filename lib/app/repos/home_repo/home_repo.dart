@@ -32,9 +32,8 @@ class HomeRepo {
     } on DioException catch (e) {
       return Result<Failure>.failure(
           failure: CustomDioExceptions.fromDioError(
-              dioError: e,
-              messageType: ErrorMessageType.messageFromResponseBody,
-              messagePath: "message"));
+        dioError: e,
+      ));
     } on ResponseParsingException catch (e) {
       return Result<Failure>.failure(
           failure: Failure(

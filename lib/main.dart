@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vinnovate/app/presentation/home_view/bloc/home_bloc.dart';
-import 'package:vinnovate/app/presentation/home_view/home_view.dart';
 import 'package:vinnovate/app/presentation/login/bloc/login_bloc.dart';
+import 'package:vinnovate/app/presentation/login/login_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
         ),
         home: MultiBlocProvider(providers: [
           BlocProvider(create: (context) => LoginBloc()),
-          BlocProvider(create: (context) => HomeBloc())
-        ], child: const HomeView()),
+          BlocProvider(create: (context) => HomeBloc()..add(LoadProducts()))
+        ], child: const LoginView()),
       ),
     );
   }
