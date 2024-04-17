@@ -19,47 +19,53 @@ class HomeView extends StatelessWidget {
               ),
               centerTitle: true,
             ),
-            body: BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                return switch (state) {
-                  HomeInitialState() => Center(
-                      child: GestureDetector(
-                          onTap: () {
-                            context.read<HomeBloc>().add(LoadProducts());
-                          },
-                          child: const Center(
-                              child: Text("Hold on...Initialising")))),
-                  HomeLoadingState() => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  HomeLoadedState() => SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 16.w),
-                          width: ScreenUtil().screenWidth,
-                          child: Text(
-                            "Showing ${state.products.length} Products",
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14.h,
-                                color: Colors.purple),
-                            overflow: TextOverflow.ellipsis,
+            body:  BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  return switch (state) {
+                    HomeInitialState() => Center(
+                        child: GestureDetector(
+                            onTap: () {
+                              context.read<HomeBloc>().add(LoadProducts());
+                            },
+                            child: const Center(
+                                child: Text("Hold on...Initialising")))),
+                    HomeLoadingState() => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    HomeLoadedState() => SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 16.w),
+                            width: ScreenUtil().screenWidth,
+                            child: Text(
+                              "Showing ${state.products.length} Products",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14.h,
+                                  color: Colors.purple),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        ...List.generate(
-                            state.products.length,
-                            (index) =>
-                                ProductCard(product: state.products[index]))
-                      ]),
-                    ),
-                  HomeLoadingFailState() => Center(child: Text(state.message)),
-                };
-              },
-            )));
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          ...List.generate(
+                              state.products.length,
+                              (index) =>
+                                  ProductCard(
+                                    onTap: (productModel) {
+                                      context.read<HomeBloc>().add(LoadProducts());
+                                    },
+                                    product: state.products[index]))
+                        ]),
+                      ),
+                    HomeLoadingFailState() =>
+                      Center(child: Text(state.message)),
+                  };
+                },
+              ),
+            ));
   }
 }

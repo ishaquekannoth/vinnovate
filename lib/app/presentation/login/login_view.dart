@@ -1,9 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vinnovate/app/presentation/home_view/bloc/home_bloc.dart';
 import 'package:vinnovate/app/presentation/home_view/home_view.dart';
 import 'package:vinnovate/app/presentation/login/widgets/custom_form_field.dart';
 import 'package:vinnovate/app/presentation/login/widgets/custom_tag_text.dart';
@@ -78,11 +76,8 @@ class LoginView extends StatelessWidget {
                                           BorderRadius.circular(5.r)))),
                           onPressed: () async {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => BlocProvider(
-                                      create: (_) =>
-                                          HomeBloc()..add(LoadProducts()),
-                                      child: const HomeView(),
-                                    )));
+                                builder: (context)=> const HomeView()                                     
+                                    ));
                           },
                           child: Text(
                             "Log in",

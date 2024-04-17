@@ -25,16 +25,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(300, 640),
-      child: MaterialApp(
-        title: 'Vinnovate',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: MultiBlocProvider(providers: [
+      child: MultiBlocProvider(
+        providers:  [
           BlocProvider(create: (context) => LoginBloc()),
-          BlocProvider(create: (context) => HomeBloc())
-        ], child: const LoginView()),
+          BlocProvider(create: (context) => HomeBloc()..add(LoadProducts()))
+        ],
+        child: MaterialApp(
+          title: 'Vinnovate',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const LoginView(),
+        ),
       ),
     );
   }
