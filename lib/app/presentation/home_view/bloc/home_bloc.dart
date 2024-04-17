@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vinnovate/app/data/product_model.dart';
@@ -13,7 +11,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadProducts>((event, emit) async {
       emit(HomeLoadingState());
       final result = await HomeRepo().getProductList();
-      log(result.toString());
       if (result.isSuccess) {
         emit(HomeLoadedState(products: result.successResponse));
       } else {

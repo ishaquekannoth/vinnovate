@@ -1,8 +1,10 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vinnovate/app/presentation/home_view/bloc/home_bloc.dart';
+import 'package:vinnovate/app/presentation/home_view/home_view.dart';
 import 'package:vinnovate/app/presentation/login/widgets/custom_form_field.dart';
 import 'package:vinnovate/app/presentation/login/widgets/custom_tag_text.dart';
 
@@ -75,16 +77,12 @@ class LoginView extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.circular(5.r)))),
                           onPressed: () async {
-                            try {
-                              final UserCredential user = await FirebaseAuth
-                                  .instance
-                                  .signInWithEmailAndPassword(
-                                      email: "kallenvasupillai@gmail.com",
-                                      password: "Ishq@9747");
-                              log(user.toString());
-                            } on FirebaseAuthException catch (e) {
-                              log(e.toString());
-                            }
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                      create: (_) =>
+                                          HomeBloc()..add(LoadProducts()),
+                                      child: const HomeView(),
+                                    )));
                           },
                           child: Text(
                             "Log in",

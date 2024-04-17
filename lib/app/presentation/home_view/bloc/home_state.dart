@@ -6,10 +6,14 @@ sealed class HomeState extends Equatable {
   @override
   List<Object> get props => [];
 }
+
 final class HomeInitialState extends HomeState {}
+
 final class HomeLoadingState extends HomeState {}
 
 final class HomeLoadedState extends HomeState {
+  @override
+  List<Object> get props => [];
   final List<ProductModel> products;
   const HomeLoadedState({required this.products}) : super();
 }
