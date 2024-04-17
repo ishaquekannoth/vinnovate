@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(300, 640),
       child: MultiBlocProvider(
-        providers:  [
+        providers: [
           BlocProvider(create: (context) => LoginBloc()),
           BlocProvider(create: (context) => HomeBloc()..add(LoadProducts()))
         ],
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const LoginView(),
+          home: LoginView(),
         ),
       ),
     );

@@ -1,13 +1,17 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vinnovate/app/presentation/home_view/home_view.dart';
+import 'package:vinnovate/app/presentation/login/bloc/login_bloc.dart';
 import 'package:vinnovate/app/presentation/login/widgets/custom_form_field.dart';
 import 'package:vinnovate/app/presentation/login/widgets/custom_tag_text.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +38,17 @@ class LoginView extends StatelessWidget {
                       text: "Email",
                     ),
                     CustomFormFieldWithValidation(
+                      controller: emailController,
                       type: FieldType.eMail,
                       hintText: "Email",
                       preFixIcon: const Icon(Icons.email_outlined),
                       autovalidateMode: AutovalidateMode.always,
                       margin: EdgeInsets.symmetric(horizontal: 15.w),
+                      onChanged: (value) {
+                        context
+                            .read<LoginBloc>()
+                            .add(OnEmailChange(email: value));
+                      },
                     ),
                     SizedBox(
                       height: 10.h,
@@ -47,11 +57,17 @@ class LoginView extends StatelessWidget {
                       text: "Password",
                     ),
                     CustomFormFieldWithValidation(
+                      controller: passwordController,
                       preFixIcon: const Icon(Icons.lock),
                       type: FieldType.password,
                       hintText: "Password",
                       autovalidateMode: AutovalidateMode.always,
                       margin: EdgeInsets.symmetric(horizontal: 15.w),
+                      onChanged: (value) {
+                        context
+                            .read<LoginBloc>()
+                            .add(OnPasswordChange(password: value));
+                      },
                     ),
                     SizedBox(
                       height: 20.h,
@@ -66,24 +82,36 @@ class LoginView extends StatelessWidget {
                     SizedBox(
                       width: 270.w,
                       height: 40.h,
-                      child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: const MaterialStatePropertyAll(
-                                  Color.fromARGB(255, 243, 103, 103)),
-                              shape: MaterialStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(5.r)))),
-                          onPressed: () async {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context)=> const HomeView()                                     
-                                    ));
-                          },
-                          child: Text(
-                            "Log in",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 12.h),
-                          )),
+                      child: BlocBuilder<LoginBloc, LoginState>(
+                        builder: (context, state) {
+                          return ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor: state.isEmailValid &&
+                                          state.isPasswordValid
+                                      ? const MaterialStatePropertyAll(
+                                          Color.fromARGB(255, 243, 103, 103))
+                                      : const MaterialStatePropertyAll(
+                                          Colors.grey),
+                                  shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5.r)))),
+                              onPressed:
+                                  state.isEmailValid && state.isPasswordValid
+                                      ? () async {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const HomeView()));
+                                        }
+                                      : null,
+                              child: Text(
+                                "Log in",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12.h),
+                              ));
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 10.h,
