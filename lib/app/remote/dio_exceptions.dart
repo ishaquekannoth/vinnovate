@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-
 class CustomDioExceptions implements Exception {
   CustomDioExceptions._();
   static Failure fromDioError(
@@ -78,8 +77,14 @@ class CustomDioExceptions implements Exception {
             ? messagePath != null
             : true,
         "Pls provide the path to the response error message");
-    String serverMessage = error.response?.data[messagePath].toString() ??
-        "Err Message From Server---->[Message]";
+    String serverMessage = '';
+    try {
+      serverMessage = error.response?.data[messagePath].toString() ??
+          "Err Message From Server---->[Message] is not found";
+    } catch (e) {
+      serverMessage = 'No key in the response called  [$messagePath] found..';
+    }
+
     switch (statusCode) {
       case 300:
         return errorMessageType == ErrorMessageType.messageFromResponseBody
@@ -498,7 +503,7 @@ class ResponseParsingException implements Exception {
   String? errorMessage;
   ResponseParsingException(
       {this.errorMessage =
-          "Response recieved successfully..Unable to parse JSON"});
+          "Response received successfully..Unable to parse JSON"});
 
   @override
   String toString() => '$errorMessage';
