@@ -18,3 +18,12 @@ class OnEmailChange extends LoginEvent {
   final String email;
   const OnEmailChange({required this.email});
 }
+
+
+
+class OnLoginButtonPress extends LoginEvent {
+  final String email;
+  final String password;
+
+  const OnLoginButtonPress({required this.email, required this.password});
+}

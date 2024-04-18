@@ -82,8 +82,20 @@ class LoginView extends StatelessWidget {
                     SizedBox(
                       width: 270.w,
                       height: 40.h,
-                      child: BlocBuilder<LoginBloc, LoginState>(
+                      child: BlocConsumer<LoginBloc, LoginState>(
+                        listener: (context, state) async {
+                          if (state is LoginSuccess) {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeView()),
+                                (route) => false);
+                          }
+                        },
                         builder: (context, state) {
+                          if (state is LoginLoading) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
                           return ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor: state.isEmailValid &&
@@ -99,10 +111,11 @@ class LoginView extends StatelessWidget {
                               onPressed:
                                   state.isEmailValid && state.isPasswordValid
                                       ? () async {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const HomeView()));
+                                          context.read<LoginBloc>().add(
+                                              OnLoginButtonPress(
+                                                  email: emailController.text,
+                                                  password:
+                                                      passwordController.text));
                                         }
                                       : null,
                               child: Text(

@@ -12,3 +12,16 @@ final class LoginValidated extends LoginState {
   const LoginValidated(
       {required super.isEmailValid, required super.isPasswordValid});
 }
+
+class LoginLoading extends LoginState {
+  const LoginLoading(
+      {required super.isEmailValid, required super.isPasswordValid});
+}
+
+class LoginSuccess extends LoginState {
+  final String message;
+  const LoginSuccess(
+      {required this.message,
+      required super.isEmailValid,
+      required super.isPasswordValid});
+}
