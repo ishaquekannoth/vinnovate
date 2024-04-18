@@ -25,3 +25,10 @@ class LoginSuccess extends LoginState {
       required super.isEmailValid,
       required super.isPasswordValid});
 }
+
+class LoginFailure extends LoginState {
+   final String message;
+  const LoginFailure(
+
+      {required this.message, required super.isEmailValid, required super.isPasswordValid});
+}

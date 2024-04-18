@@ -90,6 +90,14 @@ class LoginView extends StatelessWidget {
                                     builder: (context) => const HomeView()),
                                 (route) => false);
                           }
+                          if (state is LoginFailure) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                              state.message,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                            )));
+                          }
                         },
                         builder: (context, state) {
                           if (state is LoginLoading) {

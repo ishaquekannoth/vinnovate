@@ -10,8 +10,7 @@ class LoginRepo {
   Future<Result> loginUser(
       {required String emailAddress, required String password}) async {
     try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );

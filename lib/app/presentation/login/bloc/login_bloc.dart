@@ -34,9 +34,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             isPasswordValid: true,
             message: "Success fully loggged in"));
       } else {
-        emit(LoginValidated(
-            isEmailValid: state.isEmailValid,
-            isPasswordValid: state.isPasswordValid));
+        emit(LoginFailure(
+            isEmailValid: true,
+            isPasswordValid: true,
+            message: result.toString()));
       }
     });
   }
