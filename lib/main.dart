@@ -5,15 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vinnovate/app/presentation/home_view/bloc/home_bloc.dart';
 import 'package:vinnovate/app/presentation/login/bloc/login_bloc.dart';
 import 'package:vinnovate/app/presentation/login/login_view.dart';
+import 'package:vinnovate/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-        apiKey: "AIzaSyB05F027knj7pBfF9ioDHdKD61u7sYWQa0",
-        appId: "1:540076455640:android:e27cbcb191c08e324d89ad",
-        messagingSenderId: "540076455640",
-        projectId: "vinnovate-67c24"),
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
 }
